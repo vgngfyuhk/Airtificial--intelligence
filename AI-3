@@ -1,0 +1,27 @@
+from collections import deque
+
+def water_jug(a, b, c):
+    q = deque([((0, 0), [])])
+    seen = set()
+    while q:
+        (x, y), path = q.popleft()
+        if (x, y) in seen: continue
+        seen.add((x, y))
+        if x == c or y == c: return path + [(x, y)]
+        nxt = [(a, y), (x, b), (0, y), (x, 0),
+               (x - min(x, b - y), y + min(x, b - y)),
+               (x + min(y, a - x), y - min(y, a - x))]
+        for state in nxt:
+            q.append((state, path + [(x, y)]))
+
+res = water_jug(4, 3, 2)
+for s in res: print(s)
+
+
+OUTPUT:
+(0, 0)
+(0, 3)
+(3, 0)
+(3, 3)
+(4, 2)
+
