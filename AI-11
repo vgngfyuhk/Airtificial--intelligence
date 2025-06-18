@@ -1,0 +1,87 @@
+def get_user_input():
+    print("Enter regions (comma or space-separated):")
+    regions = input().strip().replace(',', ' ').split()
+
+    print("\nEnter neighbors as pairs (e.g., A-B), one per line. Type 'done' to finish:")
+    neighbors = {region: [] for region in regions}
+    while True:
+        pair = input()
+        if pair.lower() == 'done':
+            break
+        if '-' in pair:
+            a, b = pair.strip().split('-')
+            a, b = a.strip(), b.strip()
+            if a in neighbors and b in neighbors:
+                neighbors[a].append(b)
+                neighbors[b].append(a)
+            else:
+                print("Invalid region name in pair. Try again.")
+        else:
+            print("Invalid format. Use A-B.")
+
+    print("\nEnter available colors (comma or space-separated):")
+    colors = input().strip().replace(',', ' ').split()
+
+    return regions, neighbors, colors
+
+def is_valid(region, color, assignment, neighbors):
+    for neighbor in neighbors[region]:
+        if assignment.get(neighbor) == color:
+            return False
+    return True
+
+def backtrack(assignment, regions, neighbors, colors):
+    if len(assignment) == len(regions):
+        return assignment
+
+    unassigned = [r for r in regions if r not in assignment]
+    region = unassigned[0]
+
+    for color in colors:
+        if is_valid(region, color, assignment, neighbors):
+            assignment[region] = color
+            result = backtrack(assignment, regions, neighbors, colors)
+            if result:
+                return result
+            assignment.pop(region)
+
+    return None
+
+def main():
+    regions, neighbors, colors = get_user_input()
+    print("\nSolving CSP...")
+    solution = backtrack({}, regions, neighbors, colors)
+    
+    if solution:
+        print("\n✅ Solution found:")
+        for region in regions:
+            print(f"{region}: {solution[region]}")
+    else:
+        print("\n❌ No solution found with given constraints.")
+
+if __name__ == "__main__":
+    main()
+
+Enter regions (comma or space-separated):
+A B C D
+
+Enter neighbors as pairs (e.g., A-B), one per line. Type 'done' to finish:
+A-B
+A-C
+B-D
+C-D
+done
+
+Enter available colors (comma or space-separated):
+GREEN,RED,BLUE
+
+Solving CSP...
+
+ Solution found:
+A: GREEN
+B: RED
+C: RED
+D: GREEN
+INPUT/OUTPUT:
+
+
