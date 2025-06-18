@@ -1,0 +1,41 @@
+from itertools import permutations
+
+# Function to solve TSP
+def tsp_brute_force(distance, start=0):
+    n = len(distance)
+    cities = list(range(n))
+    cities.remove(start)
+    min_path = []
+    min_cost = float('inf')
+
+    for perm in permutations(cities):
+        path = [start] + list(perm) + [start]
+        cost = sum(distance[path[i]][path[i+1]] for i in range(len(path)-1))
+        if cost < min_cost:
+            min_cost = cost
+            min_path = path
+
+    return min_path, min_cost
+
+# Input
+n = int(input("Enter number of cities: "))
+print("Enter the distance matrix row by row:")
+distance = [list(map(int, input().split())) for _ in range(n)]
+
+# Solve
+path, cost = tsp_brute_force(distance)
+city_labels = [chr(65 + i) for i in path]  # A, B, C,...
+print("Shortest path:", " -> ".join(city_labels))
+print("Minimum cost:", cost)
+
+
+INPUT/OUTPUT:
+Enter number of cities: 4
+Enter the distance matrix row by row:
+0 10 15 20
+10 0 35 25
+15 35 0 30
+20 25 30 0
+Shortest path: A -> B -> D -> C -> A
+Minimum cost: 80
+
