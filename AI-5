@@ -1,0 +1,63 @@
+from collections import deque
+
+def is_valid(m1, c1, m2, c2):
+    return (m1 >= c1 or m1 == 0) and (m2 >= c2 or m2 == 0)
+
+def missionaries_cannibals():
+    start = (3, 3, 1)  
+    goal = (0, 0, 0)
+    visited = set()
+    queue = deque([[start]])
+
+    moves = [(1,0), (2,0), (0,1), (0,2), (1,1)]  
+
+    while queue:
+        path = queue.popleft()
+        state = path[-1]
+        if state in visited: continue
+        visited.add(state)
+
+        m1, c1, boat = state
+        m2, c2 = 3 - m1, 3 - c1
+
+        if state[:2] == goal[:2]:
+            for step in path:
+                print(step)
+            print("Goal reached!")
+            return
+
+        for m, c in moves:
+            if boat:  
+                new_m1, new_c1 = m1 - m, c1 - c
+                new_boat = 0
+            else:    
+                new_m1, new_c1 = m1 + m, c1 + c
+                new_boat = 1
+
+            new_m2, new_c2 = 3 - new_m1, 3 - new_c1
+
+            if 0 <= new_m1 <= 3 and 0 <= new_c1 <= 3:
+                if is_valid(new_m1, new_c1, new_m2, new_c2):
+                    new_state = (new_m1, new_c1, new_boat)
+                    queue.append(path + [new_state])
+
+missionaries_cannibals()
+  
+
+
+
+OUTPUT:
+(3, 3, 1)
+(3, 1, 0)
+(3, 2, 1)
+(3, 0, 0)
+(3, 1, 1)
+(1, 1, 0)
+(2, 2, 1)
+(0, 2, 0)
+(0, 3, 1)
+(0, 1, 0)
+(1, 1, 1)
+(0, 0, 0)
+Goal reached!
+
