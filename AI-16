@@ -1,0 +1,99 @@
+import math
+
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))
+
+def dsigmoid(x):
+    return x * (1 - x)
+
+# Initialize weights and biases (random)
+W1 = [[0.5, -0.4], [0.3, 0.1]]
+b1 = [0.0, 0.0]
+W2 = [0.7, -1.2]
+b2 = 0.1
+
+lr = 0.5
+
+# Training data (AND gate)
+training_data = [
+    ([0,0], 0),
+    ([0,1], 0),
+    ([1,0], 0),
+    ([1,1], 1),
+]
+
+def feedforward(x):
+    # Hidden layer
+    h1 = sigmoid(x[0]*W1[0][0] + x[1]*W1[1][0] + b1[0])
+    h2 = sigmoid(x[0]*W1[0][1] + x[1]*W1[1][1] + b1[1])
+    # Output layer
+    out = sigmoid(h1*W2[0] + h2*W2[1] + b2)
+    return h1, h2, out
+
+def train():
+    global W1, W2, b1, b2
+    for _ in range(10000):
+        for x, y in training_data:
+            h1, h2, out = feedforward(x)
+            error = y - out
+            d_out = error * dsigmoid(out)
+
+            # Backpropagation weights update
+            dW2_0 = d_out * h1
+            dW2_1 = d_out * h2
+            db2 = d_out
+
+            dh1 = d_out * W2[0] * dsigmoid(h1)
+            dh2 = d_out * W2[1] * dsigmoid(h2)
+
+            dW1_00 = dh1 * x[0]
+            dW1_10 = dh1 * x[1]
+            dW1_01 = dh2 * x[0]
+            dW1_11 = dh2 * x[1]
+            db1_0 = dh1
+            db1_1 = dh2
+
+            # Update weights and biases
+            W2[0] += lr * dW2_0
+            W2[1] += lr * dW2_1
+            b2 += lr * db2
+
+            W1[0][0] += lr * dW1_00
+            W1[1][0] += lr * dW1_10
+            W1[0][1] += lr * dW1_01
+            W1[1][1] += lr * dW1_11
+            b1[0] += lr * db1_0
+            b1[1] += lr * db1_1
+
+def predict(x):
+    _, _, out = feedforward(x)
+    return out
+
+train()
+
+print("Enter two binary inputs (0 or 1) separated by space:")
+
+while True:
+    inp = input().strip()
+    if inp.lower() == 'exit':
+        break
+    try:
+        x1, x2 = map(int, inp.split())
+        if x1 not in [0,1] or x2 not in [0,1]:
+            print("Please enter 0 or 1 only.")
+            continue
+        output = predict([x1,x2])
+        print(f"Output: {output:.3f} (~{'1' if output>=0.5 else '0'})")
+    except:
+        print("Invalid input, try again.")
+
+
+
+
+
+input/output:
+Enter two binary inputs (0 or 1) separated by space:
+1 1
+Output: 0.986 (~1)
+0 1
+Output: 0.009 (~0)
