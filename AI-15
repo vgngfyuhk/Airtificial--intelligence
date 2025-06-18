@@ -1,0 +1,45 @@
+# Simple manual Decision Tree classifier (very basic, just for demo)
+
+def play_tennis(outlook, temperature, humidity, wind):
+    # This is a very simple hardcoded decision tree based on dataset patterns
+
+    if outlook == "overcast":
+        return "Yes"
+    elif outlook == "sunny":
+        if humidity == "high":
+            return "No"
+        else:
+            return "Yes"
+    elif outlook == "rain":
+        if wind == "strong":
+            return "No"
+        else:
+            return "Yes"
+    else:
+        return "Unknown"
+
+def get_user_input():
+    outlook = input("Outlook (Sunny/Overcast/Rain): ").strip().lower()
+    temperature = input("Temperature (Hot/Mild/Cool): ").strip().lower()  # Not used in logic
+    humidity = input("Humidity (High/Normal): ").strip().lower()
+    wind = input("Wind (Weak/Strong): ").strip().lower()
+
+    return outlook, temperature, humidity, wind
+
+def main():
+    outlook, temperature, humidity, wind = get_user_input()
+    result = play_tennis(outlook, temperature, humidity, wind)
+    print("Will play tennis?", result)
+
+if __name__ == "__main__":
+    main()
+
+
+INPUT/OUTPUT:
+Outlook (Sunny/Overcast/Rain): RAIN
+Temperature (Hot/Mild/Cool): COLD
+Humidity (High/Normal): NORMAL
+Wind (Weak/Strong): STRONG
+Will play tennis? No
+
+
