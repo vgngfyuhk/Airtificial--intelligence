@@ -1,0 +1,26 @@
+rooms = {'A': input("Room A dirty? ").lower()=='yes', 'B': input("Room B dirty? ").lower()=='yes'}
+pos = input("Vacuum position (A/B): ").upper()
+
+while True:
+    if rooms[pos]:
+        print(f"Cleaned {pos}")
+        rooms[pos] = False
+    else:
+        print(f"{pos} clean")
+    if not any(rooms.values()):
+        print("Done")
+        break
+    pos = 'B' if pos == 'A' else 'A'
+    print(f"Moved to {pos}")
+
+
+
+INPUT/OUTPUT:
+Room A dirty? YES
+Room B dirty? NO
+Vacuum position (A/B): A
+Cleaned A
+Done
+
+
+
