@@ -1,0 +1,44 @@
+def dfs(graph, current, goal, visited=None, path=None):
+    if visited is None: visited = set()
+    if path is None: path = [current]
+    visited.add(current)
+    if current == goal: return path, len(path) - 1
+    for neighbor in graph.get(current, []):
+        if neighbor not in visited:
+            result = dfs(graph, neighbor, goal, visited, path + [neighbor])
+            if result[0]: return result
+    return None, None
+
+graph = {}
+n = int(input("Enter number of edges: "))
+print("Enter edges (e.g., A B):")
+for _ in range(n):
+    u, v = input().split()
+    graph.setdefault(u, []).append(v)
+
+start = input("Enter start node: ").strip().upper()
+goal = input("Enter goal node: ").strip().upper()
+
+path, cost = dfs(graph, start, goal)
+if path:
+    print("Path:", '->'.join(path))
+    print("Cost:", cost)
+else:
+    print("No path found.")
+
+
+
+
+INPUT/OUTPUT:
+
+Enter number of edges: 5
+Enter edges (e.g., A B):
+A B
+A C
+B D
+C E
+D F
+Enter start node: A
+Enter goal node: E
+Path: A->C->E
+Cost: 2
