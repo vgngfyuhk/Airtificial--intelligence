@@ -1,0 +1,54 @@
+from collections import deque
+
+g = {}
+n = int(input("Enter number of edges: "))
+print("Enter edges (node1 node2):")
+for _ in range(n):
+    while True:
+        line = input().strip()
+        parts = line.split()
+        if len(parts) == 2:
+            u, v = parts
+            g.setdefault(u, []).append(v)
+            break
+        else:
+            print("Invalid input, enter exactly two nodes separated by space.")
+
+def bfs(g, s, t):
+    q = deque([(s, [s])])
+    v = set()
+    while q:
+        node, path = q.popleft()
+        if node == t:
+            return path, len(path) - 1
+        if node not in v:
+            v.add(node)
+            for nxt in g.get(node, []):
+                if nxt not in v:
+                    q.append((nxt, path + [nxt]))
+    return None, None
+
+start = input("Enter start node: ")
+goal = input("Enter goal node: ")
+
+path, cost = bfs(g, start, goal)
+if path:
+    print("Path:", '->'.join(path))
+    print("Cost:", cost)
+else:
+    print("No path found.")
+
+
+
+INPUT/OUTPUT:
+Enter number of edges: 5
+Enter edges (node1 node2):
+A B
+A C
+B D
+C D
+D E
+Enter start node: A
+Enter goal node: E
+Path: A->B->D->E
+Cost: 3
