@@ -1,0 +1,16 @@
+% Rule
+diagnose :-
+    write('Do you have fever (yes/no): '), read(Fever),
+    write('Do you have cough (yes/no): '), read(Cough),
+    ( Fever == yes, Cough == yes ->
+        Disease = flu,
+        write('Disease = '), write(Disease)
+    ; write('No diagnosis.')
+    ).
+
+
+input/output:
+?- diagnose.
+Do you have fever (yes/no): yes.
+Do you have cough (yes/no): yes.
+Disease = flu
