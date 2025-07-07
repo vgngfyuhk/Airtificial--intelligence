@@ -1,0 +1,13 @@
+% Facts: name_dob(Name, DOB)
+name_dob(mathu, '2005-11-24').
+name_dob(john, '2000-01-15').
+name_dob(sara, '1998-07-09').
+
+% Sample Query:
+% ?- name_dob(mathu, DOB).
+% Output: DOB = '2005-11-24'.
+
+
+input/output:
+?- name_dob(mathu, DOB).
+DOB = '2005-11-24'.
