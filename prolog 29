@@ -1,0 +1,26 @@
+% Facts (initial known)
+fact(a).
+fact(b).
+
+% Rules
+fact(c) :- fact(a), fact(b).
+fact(d) :- fact(c).
+fact(e) :- fact(d).
+
+% Forward chaining query
+infer :-
+    fact(X),
+    format('Inferred: ~w~n', [X]),
+    fail.
+infer.  % to succeed after all inferences
+
+
+inpu/output:
+| ?-  infer.
+Inferred: a
+Inferred: b
+Inferred: c
+Inferred: d
+Inferred: e
+
+
