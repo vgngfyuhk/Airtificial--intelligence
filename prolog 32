@@ -1,0 +1,18 @@
+% Match a list that starts with 'a' and ends with 'c'
+pattern_match([a | Tail]) :-
+    append(_, [c], Tail),
+    write('Pattern matched!'), nl.
+
+% General rule to test any pattern
+match_pattern(Pattern, List) :-
+    Pattern = List,
+    write('Exact match!'), nl.
+
+
+input/output:
+?- pattern_match([a, b, c]).
+Pattern matched!
+
+?- match_pattern([a, b, c], [a, b, c]).
+Exact match!
+
