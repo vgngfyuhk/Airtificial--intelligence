@@ -1,0 +1,16 @@
+% Facts
+initial(monkey, floor).
+initial(box, window).
+initial(banana, ceiling).
+
+% Rule for getting the banana
+get_banana :-
+    write('Monkey climbs to get the banana.'), nl.
+
+
+
+input/output:
+?- get_banana.
+Monkey climbs to get the banana.
+true.
+
