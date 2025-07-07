@@ -1,0 +1,48 @@
+% Facts
+male(john).
+male(raj).
+male(ali).
+male(sam).
+
+female(rita).
+female(sara).
+female(anna).
+
+parent(john, raj).
+parent(john, sara).
+parent(rita, raj).
+parent(rita, sara).
+
+parent(raj, ali).
+parent(anna, ali).
+parent(raj, sam).
+parent(anna, sam).
+
+% Rules
+father(X, Y) :- male(X), parent(X, Y).
+mother(X, Y) :- female(X), parent(X, Y).
+sibling(X, Y) :- parent(Z, X), parent(Z, Y), X \= Y.
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+grandfather(X, Y) :- male(X), grandparent(X, Y).
+grandmother(X, Y) :- female(X), grandparent(X, Y).
+
+
+input/output:
+
+?- father(john, raj).
+true.
+
+?- mother(rita, sara).
+true.
+
+?- sibling(raj, sara).
+true.
+
+?- grandparent(john, ali).
+true.
+
+?- grandfather(john, sam).
+true.
+
+?- grandmother(anna, ali).
+true.
