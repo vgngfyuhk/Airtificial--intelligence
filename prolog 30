@@ -1,0 +1,22 @@
+% Facts
+fact(rainy).
+fact(cloudy).
+
+% Rules (inference)
+fact(wet_ground) :- fact(rainy).
+fact(take_umbrella) :- fact(cloudy).
+fact(flood_warning) :- fact(rainy), fact(cloudy).
+
+% General rule to ask:
+ask(Fact) :-
+    fact(Fact)
+    -> format('Yes, ~w is true.~n', [Fact])
+    ;  format('No, ~w cannot be inferred.~n', [Fact]).
+
+
+inpu/output:
+?- ask(wet_ground).
+Yes, wet_ground is true.
+
+
+
