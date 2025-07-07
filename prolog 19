@@ -1,0 +1,14 @@
+% Facts: student(Name, Subject, Teacher, Code)
+student(mathu, ai, 'jaya mabel', csa1730).
+student(mathu, maths, 'raju', ma101).
+student(john, ai, 'jaya mabel', csa1730).
+student(john, physics, 'raman', ph102).
+student(sara, maths, 'raju', ma101).
+student(sara, chemistry, 'kavitha', ch103).
+
+
+input/output:
+?- student(mathu, Subject, Teacher, Code).
+Subject = ai,
+Teacher = 'jaya mabel',
+Code = csa1730 ;
