@@ -1,0 +1,15 @@
+% Facts: planet(Name, Size, DistanceFromSunInMillionKm)
+planet(mercury, small, 58).
+planet(venus, medium, 108).
+planet(earth, medium, 150).
+planet(mars, small, 228).
+planet(jupiter, large, 778).
+planet(saturn, large, 1430).
+planet(uranus, large, 2870).
+planet(neptune, large, 4500).
+
+
+input/ouput:
+?- planet(jupiter, Size, Distance).
+Size = large,
+Distance = 778.
