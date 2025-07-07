@@ -1,0 +1,33 @@
+% Facts
+bird(sparrow).
+bird(penguin).
+bird(eagle).
+bird(ostrich).
+
+cannot_fly(penguin).
+cannot_fly(ostrich).
+
+% Rule
+can_fly(Bird) :-
+    bird(Bird),
+    \+ cannot_fly(Bird).
+
+% Start program
+start :-
+    write('Enter the name of the bird in lowercase followed by a dot (e.g., sparrow.): '), nl,
+    read(Bird),
+    (   can_fly(Bird)
+    ->  write(Bird), write(' can fly.')
+    ;   bird(Bird)
+    ->  write(Bird), write(' cannot fly.')
+    ;   write('Unknown bird.')
+    ).
+
+
+input/output:
+?- start.
+Enter the name of the bird in lowercase followed by a dot (e.g., sparrow.):
+|: sparrow.
+sparrow can fly.
+
+
