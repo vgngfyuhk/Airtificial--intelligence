@@ -1,0 +1,46 @@
+% Edges and heuristic
+edge(a, b).
+edge(a, c).
+edge(b, d).
+edge(c, e).
+edge(d, e).
+
+heuristic(a, 5).
+heuristic(b, 3).
+heuristic(c, 2).
+heuristic(d, 1).
+heuristic(e, 0).
+
+% Entry point
+best_first(Start, Goal) :-
+    bfs([[Start]], Goal, RevPath),
+    reverse(RevPath, Path),
+    write('Path: '), write(Path), nl.
+
+% Goal found
+bfs([[Goal|Rest]|_], Goal, [Goal|Rest]).
+
+% Search
+bfs([Path|Others], Goal, FinalPath) :-
+    Path = [Current|_],
+    findall([Next,Current|Path],
+            (edge(Current, Next), \+ member(Next, Path)),
+            NewPaths),
+    append(Others, NewPaths, AllPaths),
+    sort_by_heuristic(AllPaths, Sorted),
+    bfs(Sorted, Goal, FinalPath).
+
+% Sort paths by heuristic of head node
+sort_by_heuristic(Paths, Sorted) :-
+    predsort(compare_paths, Paths, Sorted).
+
+compare_paths(Delta, [A|_], [B|_]) :-
+    heuristic(A, HA),
+    heuristic(B, HB),
+    compare(Delta, HA, HB).
+
+
+
+input/output
+?- best_first(a, e).
+Path: [a, c, e]
