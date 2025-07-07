@@ -1,0 +1,17 @@
+% Disease-based diet recommendations
+diet(diabetes, 'Low sugar, high fiber foods like whole grains, vegetables, and legumes').
+diet(hypertension, 'Low salt diet with fruits, vegetables, and low-fat dairy').
+diet(anemia, 'Iron-rich foods like spinach, liver, and beans').
+diet(obesity, 'Low calorie, high protein, and fiber-rich diet').
+diet(ulcer, 'Bland diet with non-acidic, non-spicy soft foods').
+
+% Rule to suggest diet
+suggest_diet(Disease) :-
+    diet(Disease, Recommendation),
+    format('Recommended diet for ~w: ~w~n', [Disease, Recommendation]).
+
+
+input/output1:
+?- suggest_diet(diabetes).
+Recommended diet for diabetes: Low sugar, high fiber foods like whole grains, vegetables, and legumes
+
