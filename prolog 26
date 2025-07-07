@@ -1,0 +1,16 @@
+% Facts
+fruit(apple, red).
+fruit(banana, yellow).
+fruit(grape, purple).
+fruit(orange, orange).
+fruit(guava, green).
+
+% Rule to find fruit by color
+find_fruit(Color, Fruit) :-
+    fruit(Fruit, Color).
+
+
+input/output:
+
+?- find_fruit(yellow, Fruit).
+Fruit = banana.
